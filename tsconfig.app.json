@@ -7,6 +7,13 @@
     "types": ["vite/client"],
     "skipLibCheck": true,
 
+    /* Adicione estas duas linhas abaixo */
+    "baseUrl": ".",
+    "paths": {
+      "@/*": ["./src/*"]
+    },
+    "ignoreDeprecations": "6.0",
+
     /* Bundler mode */
     "moduleResolution": "bundler",
     "allowImportingTsExtensions": true,
