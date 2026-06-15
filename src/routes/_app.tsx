@@ -2,7 +2,6 @@ import { createFileRoute, Outlet, useLocation } from "@tanstack/react-router";
 import { Sidebar } from "@/components/layout/Sidebar";
 
 export const Route = createFileRoute("/_app")({
-  // Mantenha, mas vamos verificar se é o ID correto
   component: AppLayout,
 });
 
