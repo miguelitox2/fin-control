@@ -10,11 +10,11 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as AppRouteImport } from './routes/_app'
-import { Route as AppIndexRouteImport } from './routes/_app/index'
-import { Route as AppTransactionsRouteImport } from './routes/_app/transactions'
-import { Route as AppReportsRouteImport } from './routes/_app/reports'
-import { Route as AppProjectionsRouteImport } from './routes/_app/projections'
-import { Route as AppCategoriesRouteImport } from './routes/_app/categories'
+import { Route as AppIndexRouteImport } from './routes/_app.index'
+import { Route as AppTransactionsRouteImport } from './routes/_app.transactions'
+import { Route as AppReportsRouteImport } from './routes/_app.reports'
+import { Route as AppProjectionsRouteImport } from './routes/_app.projections'
+import { Route as AppCategoriesRouteImport } from './routes/_app.categories'
 
 const AppRoute = AppRouteImport.update({
   id: '/_app',

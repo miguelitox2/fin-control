@@ -1,18 +1,34 @@
-import { createFileRoute, Outlet } from "@tanstack/react-router";
+import { createFileRoute, Outlet, useLocation } from "@tanstack/react-router";
 import { Sidebar } from "@/components/layout/Sidebar";
 
 export const Route = createFileRoute("/_app")({
-  component: () => (
+  // Mantenha, mas vamos verificar se é o ID correto
+  component: AppLayout,
+});
+
+function AppLayout() {
+  const { pathname } = useLocation();
+  const titleMap: Record<string, string> = {
+    "/": "Dashboard",
+    "/transactions": "Transações",
+    "/categories": "Categorias",
+    "/reports": "Relatórios",
+    "/projections": "Projeções",
+  };
+
+  const title = titleMap[pathname] || "Vext";
+
+  return (
     <div className="flex h-screen w-full">
       <Sidebar />
       <div className="flex-1 flex flex-col h-full overflow-hidden">
-        <header className="h-16 border-b border-slate-200 flex items-center px-6">
-          <h2 className="text-lg font-semibold text-slate-800">Dashboard</h2>
+        <header className="h-16 border-b border-slate-200 flex items-center px-6 bg-white">
+          <h2 className="text-lg font-semibold text-slate-800">{title}</h2>
         </header>
         <main className="flex-1 overflow-y-auto p-6 bg-slate-50">
           <Outlet />
         </main>
       </div>
     </div>
-  ),
-});
+  );
+}
