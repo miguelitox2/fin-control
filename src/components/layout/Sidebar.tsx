@@ -22,7 +22,7 @@ export function Sidebar() {
   return (
     <aside className="w-52 border-r border-zinc-200 bg-zinc-100 flex flex-col py-2 h-screen antialiased">
       <div className="h-10 flex items-center px-2 gap-2">
-        <div className="bg-blue-600 p-1.5 rounded-md border-none">
+        <div className="bg-blue-400 p-1.5 rounded-md border-none">
           <Wallet size={16} className="text-zinc-100" />
         </div>
         <h1 className="font-bold text-lg text-zinc-950">Vext Finanças</h1>
@@ -61,7 +61,7 @@ export function Sidebar() {
 
         <button
           onClick={() => console.log("Logout!")}
-          className="flex w-full items-center gap-2 px-2 py-2 rounded-lg text-red-600 hover:bg-red-50 transition-colors text-sm"
+          className="flex w-full items-center gap-2 px-2 py-2 rounded-lg bg-zinc-50 text-red-600 hover:bg-red-50 transition-colors text-sm"
         >
           <LogOut size={20} />
           Sair
