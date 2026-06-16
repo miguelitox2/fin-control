@@ -4,7 +4,7 @@ export const Route = createRootRoute({
   component: () => (
     <>
       {/*(Header/Sidebar) no futuro */}
-      <div className="p-2">
+      <div className="antialiased">
         <Outlet />
       </div>
     </>
