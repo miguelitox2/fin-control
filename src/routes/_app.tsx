@@ -21,10 +21,10 @@ function AppLayout() {
     <div className="flex h-screen w-full">
       <Sidebar />
       <div className="flex-1 flex flex-col h-full overflow-hidden">
-        <header className="h-10 flex items-center px-6 bg-zinc-50">
+        <header className="h-10 flex items-center px-6">
           <h2 className="text-md font-semibold text-zinc-800">{title}</h2>
         </header>
-        <main className="flex-1 overflow-y-auto p-6 bg-zinc-50">
+        <main className="flex-1 overflow-y-auto p-6">
           <Outlet />
         </main>
       </div>

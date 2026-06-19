@@ -1,6 +1,32 @@
 @import url("https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap");
 @import "tailwindcss";
 
+@import "tailwindcss";
+
 @theme {
-  --font-sans: "Inter", sans-serif;
+  --color-sidebar-bg: var(--sidebar-bg);
+  --color-sidebar-border: var(--sidebar-border);
+  --color-sidebar-text-primary: var(--sidebar-text-primary);
+  --color-sidebar-text-secondary: var(--sidebar-text-secondary);
+  --color-sidebar-active: var(--sidebar-active);
+  --color-sidebar-hover: var(--sidebar-hover);
+}
+
+:root {
+  --sidebar-bg: #fafafa;
+  --sidebar-border: #f4f4f5;
+  --sidebar-text-primary: #18181b;
+  --sidebar-text-secondary: #27272a;
+  --sidebar-active: #e4e4e7;
+  --sidebar-hover: #e4e4e7;
+}
+
+/* Modo Escuro */
+.dark {
+  --sidebar-bg: #18181b;
+  --sidebar-border: #27272a;
+  --sidebar-text-primary: #f4f4f5;
+  --sidebar-text-secondary: #e4e4e7;
+  --sidebar-active: #27272a;
+  --sidebar-hover: #27272a;
 }
