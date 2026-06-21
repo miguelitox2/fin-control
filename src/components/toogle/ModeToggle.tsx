@@ -20,7 +20,7 @@ export function ModeToggle() {
       variant="ghost"
       size="icon"
       onClick={() => setTheme(theme === "light" ? "dark" : "light")}
-      className="w-full justify-start gap-3 px-4 hover:bg-sidebar-hover transition-colors"
+      className="w-full justify-start gap-3 px-4 hover:bg-primary-hover transition-colors cursor-pointer"
     >
       <Sun
         className={`size-4 transition-all ${theme === "dark" ? "scale-100" : "scale-0"}`}
@@ -29,7 +29,7 @@ export function ModeToggle() {
         className={`size-4 transition-all ${theme === "light" ? "scale-100" : "scale-0"}`}
       />
 
-      <span className="text-sm text-sidebar-text-secondary">
+      <span className="text-sm text-text-secondary">
         {theme === "light" ? "Modo Escuro" : "Modo Claro"}
       </span>
     </Button>

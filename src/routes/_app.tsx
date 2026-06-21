@@ -8,7 +8,7 @@ export const Route = createFileRoute("/_app")({
 function AppLayout() {
   const { pathname } = useLocation();
   const titleMap: Record<string, string> = {
-    "/": "Dashboard",
+    "/": "Visão Geral",
     "/transactions": "Transações",
     "/categories": "Categorias",
     "/reports": "Relatórios",
@@ -20,11 +20,11 @@ function AppLayout() {
   return (
     <div className="flex h-screen w-full">
       <Sidebar />
-      <div className="flex-1 flex flex-col h-full overflow-hidden">
-        <header className="h-10 flex items-center px-6">
-          <h2 className="text-md font-semibold text-zinc-800">{title}</h2>
+      <div className="flex-1 flex flex-col h-full overflow-hidden py-2 px-4">
+        <header className="flex items-center">
+          <h2 className="text-2xl font-semibold text-text-primary">{title}</h2>
         </header>
-        <main className="flex-1 overflow-y-auto p-6">
+        <main className="flex-1 overflow-y-auto py-4">
           <Outlet />
         </main>
       </div>

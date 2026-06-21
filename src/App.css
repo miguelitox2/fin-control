@@ -4,29 +4,29 @@
 @import "tailwindcss";
 
 @theme {
-  --color-sidebar-bg: var(--sidebar-bg);
-  --color-sidebar-border: var(--sidebar-border);
-  --color-sidebar-text-primary: var(--sidebar-text-primary);
-  --color-sidebar-text-secondary: var(--sidebar-text-secondary);
-  --color-sidebar-active: var(--sidebar-active);
-  --color-sidebar-hover: var(--sidebar-hover);
+  --color-primary-bg: var(--primary-bg);
+  --color-primary-border: var(--primary-border);
+  --color-text-primary: var(--text-primary);
+  --color-text-secondary: var(--text-secondary);
+  --color-primary-active: var(--primary-active);
+  --color-primary-hover: var(--primary-hover);
 }
 
 :root {
-  --sidebar-bg: #fafafa;
-  --sidebar-border: #f4f4f5;
-  --sidebar-text-primary: #18181b;
-  --sidebar-text-secondary: #27272a;
-  --sidebar-active: #e4e4e7;
-  --sidebar-hover: #e4e4e7;
+  --primary-bg: #fafafa;
+  --primary-border: #f4f4f5;
+  --text-primary: #18181b;
+  --text-secondary: #27272a;
+  --primary-active: #e4e4e7;
+  --primary-hover: #e4e4e7;
 }
 
 /* Modo Escuro */
 .dark {
-  --sidebar-bg: #18181b;
-  --sidebar-border: #27272a;
-  --sidebar-text-primary: #f4f4f5;
-  --sidebar-text-secondary: #e4e4e7;
-  --sidebar-active: #27272a;
-  --sidebar-hover: #27272a;
+  --primary-bg: #18181b;
+  --primary-border: #27272a;
+  --text-primary: #f4f4f5;
+  --text-secondary: #e4e4e7;
+  --primary-active: #27272a;
+  --primary-hover: #27272a;
 }
