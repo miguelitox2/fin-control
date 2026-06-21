@@ -9,6 +9,7 @@
   --color-text-primary: var(--text-primary);
   --color-text-secondary: var(--text-secondary);
   --color-text-emerald-500: var(--text-emerald-500);
+  --color-text-danger-600: var(--text-danger-600);
   --color-primary-active: var(--primary-active);
   --color-primary-hover: var(--primary-hover);
 }
@@ -18,12 +19,12 @@
   --primary-border: #f4f4f5;
   --text-primary: #18181b;
   --text-secondary: #27272a;
-  --text-emerald-500: #10b981;
+  --text-emerald-500: #16a34a;
+  --text-danger-600: #dc2626;
   --primary-active: #e4e4e7;
   --primary-hover: #e4e4e7;
 }
 
-/* Modo Escuro */
 .dark {
   --primary-bg: #18181b;
   --primary-border: #27272a;
