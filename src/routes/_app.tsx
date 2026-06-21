@@ -42,7 +42,7 @@ function AppLayout() {
     <WorkspaceProvider>
       <div className="flex h-screen w-full">
         <Sidebar />
-        <div className="flex-1 flex flex-col h-full overflow-hidden py-2 px-4">
+        <div className="flex-1 flex flex-col h-full overflow-hidden py-4 px-6">
           <div className="flex justify-between items-start mb-6">
             <header className="flex flex-col">
               <h2 className="text-2xl font-bold text-text-primary">

@@ -21,7 +21,7 @@ const navLinks = [
 
 export function Sidebar() {
   return (
-    <aside className="w-52 border-r border-primary-border bg-primary-bg flex flex-col py-2 h-screen antialiased">
+    <aside className="w-52 border-r border-primary-border bg-primary-bg flex flex-col py-4 px-2 h-screen antialiased">
       <div className="h-10 flex items-center px-2 gap-2">
         <div className="bg-blue-500 p-1.5 rounded-md">
           <Wallet size={16} className="text-white" />
@@ -29,7 +29,7 @@ export function Sidebar() {
         <h1 className="font-bold text-lg text-text-primary">Vext</h1>
       </div>
 
-      <nav className="flex-1 px-2 py-4 space-y-1">
+      <nav className="flex-1 py-4 space-y-1">
         {navLinks.map((link) => (
           <Link
             key={link.to}
