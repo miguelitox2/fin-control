@@ -2,6 +2,8 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { mockTransactions } from "./moc-data";
 import { ArrowUp, ArrowDown } from "lucide-react";
 import { useWorkspace } from "@/context/workspace-context";
+import { FixedExpensesList } from "@/components/finance/fixedExpensesList";
+import { mockFixedExpenses } from "./mockFixedExpenses";
 
 export function Dashboard() {
   const { workspace } = useWorkspace();
@@ -12,21 +14,31 @@ export function Dashboard() {
   const workspaceTransactions = mockTransactions.filter(
     (t) => t.workspaceId === workspace,
   );
+  const filteredFixedExpenses = mockFixedExpenses.filter(
+    (f) => f.workspaceId === workspace,
+  );
 
   const getTotals = (month: number) => {
-    const monthTxs = workspaceTransactions.filter((t) => {
-      return t.date.getUTCMonth() === month;
-    });
+    const monthTxs = workspaceTransactions.filter(
+      (t) => t.date.getUTCMonth() === month,
+    );
 
     const income = monthTxs
       .filter((t) => t.type === "INCOME")
       .reduce((acc, t) => acc + t.value, 0);
 
-    const expense = monthTxs
+    const regularExpense = monthTxs
       .filter((t) => t.type === "EXPENSE")
       .reduce((acc, t) => acc + t.value, 0);
 
-    return { income, expense, balance: income - expense };
+    const fixedExpenseTotal = filteredFixedExpenses.reduce(
+      (acc, f) => acc + f.amount,
+      0,
+    );
+
+    const totalExpense = regularExpense + fixedExpenseTotal;
+
+    return { income, expense: totalExpense, balance: income - totalExpense };
   };
 
   const current = getTotals(currentMonth);
@@ -81,13 +93,13 @@ export function Dashboard() {
             key={card.title}
             className="border-primary-border bg-primary-bg"
           >
-            <CardHeader className="pb-2">
+            <CardHeader className="">
               <CardTitle className="text-xs uppercase font-medium text-text-secondary tracking-wider">
                 {card.title}
               </CardTitle>
             </CardHeader>
             <CardContent>
-              <div className={`text-3xl font-bold ${card.color}`}>
+              <div className={`text-xl font-bold ${card.color}`}>
                 R$ {card.value.toFixed(2)}
               </div>
 
@@ -125,6 +137,7 @@ export function Dashboard() {
           </Card>
         ))}
       </div>
+      <FixedExpensesList expenses={filteredFixedExpenses} />
     </div>
   );
 }

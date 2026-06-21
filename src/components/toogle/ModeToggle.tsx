@@ -2,8 +2,13 @@ import { Moon, Sun } from "lucide-react";
 import { useTheme } from "next-themes";
 import { Button } from "@/components/ui/button";
 import { useEffect, useState } from "react";
+import { cn } from "@/lib/utils";
 
-export function ModeToggle() {
+interface ModeToggleProps {
+  isExpanded: boolean;
+}
+
+export function ModeToggle({ isExpanded }: ModeToggleProps) {
   const [mounted, setMounted] = useState(false);
   const { theme, setTheme } = useTheme();
 
@@ -11,25 +16,37 @@ export function ModeToggle() {
     setMounted(true);
   }, []);
 
-  if (!mounted) {
-    return <Button variant="ghost" size="icon" className="size-4" />;
-  }
+  if (!mounted) return null;
 
   return (
     <Button
       variant="ghost"
-      size="icon"
       onClick={() => setTheme(theme === "light" ? "dark" : "light")}
-      className="w-full justify-start gap-3 px-4 hover:bg-primary-hover transition-colors cursor-pointer"
+      className={cn(
+        "flex w-full items-center justify-start gap-3 px-3 hover:bg-primary-hover transition-all duration-300 cursor-pointer",
+      )}
     >
-      <Sun
-        className={`size-4 transition-all ${theme === "dark" ? "scale-100" : "scale-0"}`}
-      />
-      <Moon
-        className={`size-4 transition-all ${theme === "light" ? "scale-100" : "scale-0"}`}
-      />
+      <div className="flex size-5 shrink-0 items-center justify-center">
+        <Sun
+          className={cn(
+            "size-4 transition-all duration-300",
+            theme === "dark" ? "scale-100 opacity-100" : "scale-0 opacity-0",
+          )}
+        />
+        <Moon
+          className={cn(
+            "size-4 absolute transition-all duration-300",
+            theme === "light" ? "scale-100 opacity-100" : "scale-0 opacity-0",
+          )}
+        />
+      </div>
 
-      <span className="text-sm text-text-secondary">
+      <span
+        className={cn(
+          "text-sm text-text-secondary whitespace-nowrap transition-all duration-300",
+          isExpanded ? "w-auto opacity-100" : "w-0 opacity-0 overflow-hidden",
+        )}
+      >
         {theme === "light" ? "Modo Escuro" : "Modo Claro"}
       </span>
     </Button>
