@@ -5,6 +5,7 @@
 
 @theme {
   --color-primary-bg: var(--primary-bg);
+  --color-primary-button-bg: var(--primary-button-bg);
   --color-primary-border: var(--primary-border);
   --color-text-primary: var(--text-primary);
   --color-text-secondary: var(--text-secondary);
@@ -12,10 +13,12 @@
   --color-text-danger-600: var(--text-danger-600);
   --color-primary-active: var(--primary-active);
   --color-primary-hover: var(--primary-hover);
+  --color-primary-hover-button: var(--primary-hover-button);
 }
 
 :root {
   --primary-bg: #fafafa;
+  --primary-button-bg: #e4e4e7;
   --primary-border: #f4f4f5;
   --text-primary: #18181b;
   --text-secondary: #27272a;
@@ -23,13 +26,16 @@
   --text-danger-600: #dc2626;
   --primary-active: #e4e4e7;
   --primary-hover: #e4e4e7;
+  --primary-hover-button: #d4d4d8;
 }
 
 .dark {
   --primary-bg: #18181b;
+  --primary-button-bg: #27272a;
   --primary-border: #27272a;
   --text-primary: #f4f4f5;
   --text-secondary: #e4e4e7;
   --primary-active: #27272a;
   --primary-hover: #27272a;
+  --primary-hover-button: #3f3f46;
 }

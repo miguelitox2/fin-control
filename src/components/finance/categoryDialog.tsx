@@ -33,7 +33,6 @@ export function CategoryDialog({ children }: { children: React.ReactNode }) {
   const [color, setColor] = useState(CATEGORY_COLORS[0]);
   const [error, setError] = useState<string | null>(null);
 
-  // Adicionamos 'categories' aqui para consultar a lista atual
   const { addCategory, categories } = useCategories();
   const { workspace } = useWorkspace();
 
@@ -42,13 +41,11 @@ export function CategoryDialog({ children }: { children: React.ReactNode }) {
   }, [open]);
 
   const handleCreate = () => {
-    // 1. Validação de campo vazio
     if (!name.trim()) {
       setError("O nome da categoria é obrigatório.");
       return;
     }
 
-    // 2. Validação de duplicidade
     const isDuplicate = categories.some(
       (c) =>
         c.workspaceId === workspace &&
@@ -62,7 +59,7 @@ export function CategoryDialog({ children }: { children: React.ReactNode }) {
 
     addCategory({
       id: crypto.randomUUID(),
-      name: name.trim(), // Salvamos com trim() para evitar espaços extras
+      name: name.trim(),
       color,
       type: "EXPENSE",
       workspaceId: workspace,
@@ -73,7 +70,6 @@ export function CategoryDialog({ children }: { children: React.ReactNode }) {
   };
 
   return (
-    // ... (o restante do componente permanece igual)
     <Dialog open={open} onOpenChange={setOpen}>
       <DialogTrigger asChild>{children}</DialogTrigger>
       <DialogContent className="bg-primary-bg border-primary-border sm:max-w-md">
@@ -123,7 +119,7 @@ export function CategoryDialog({ children }: { children: React.ReactNode }) {
 
         <Button
           onClick={handleCreate}
-          className="w-full bg-blue-600 hover:bg-blue-700 text-white cursor-pointer"
+          className="w-full bg-primary-button-bg hover:bg-primary-hover-button text-text-primary cursor-pointer"
         >
           Criar Categoria
         </Button>
