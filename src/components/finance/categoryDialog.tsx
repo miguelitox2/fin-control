@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import {
   Dialog,
   DialogContent,
@@ -31,16 +31,38 @@ export function CategoryDialog({ children }: { children: React.ReactNode }) {
   const [open, setOpen] = useState(false);
   const [name, setName] = useState("");
   const [color, setColor] = useState(CATEGORY_COLORS[0]);
+  const [error, setError] = useState<string | null>(null);
 
-  const { addCategory } = useCategories();
+  // Adicionamos 'categories' aqui para consultar a lista atual
+  const { addCategory, categories } = useCategories();
   const { workspace } = useWorkspace();
 
+  useEffect(() => {
+    if (open) setError(null);
+  }, [open]);
+
   const handleCreate = () => {
-    if (!name.trim()) return;
+    // 1. Validação de campo vazio
+    if (!name.trim()) {
+      setError("O nome da categoria é obrigatório.");
+      return;
+    }
+
+    // 2. Validação de duplicidade
+    const isDuplicate = categories.some(
+      (c) =>
+        c.workspaceId === workspace &&
+        c.name.trim().toLowerCase() === name.trim().toLowerCase(),
+    );
+
+    if (isDuplicate) {
+      setError("Já existe uma categoria com este nome.");
+      return;
+    }
 
     addCategory({
       id: crypto.randomUUID(),
-      name,
+      name: name.trim(), // Salvamos com trim() para evitar espaços extras
       color,
       type: "EXPENSE",
       workspaceId: workspace,
@@ -51,6 +73,7 @@ export function CategoryDialog({ children }: { children: React.ReactNode }) {
   };
 
   return (
+    // ... (o restante do componente permanece igual)
     <Dialog open={open} onOpenChange={setOpen}>
       <DialogTrigger asChild>{children}</DialogTrigger>
       <DialogContent className="bg-primary-bg border-primary-border sm:max-w-md">
@@ -65,10 +88,18 @@ export function CategoryDialog({ children }: { children: React.ReactNode }) {
             <Label className="text-text-secondary text-sm">Nome</Label>
             <Input
               value={name}
-              onChange={(e) => setName(e.target.value)}
+              onChange={(e) => {
+                setName(e.target.value);
+                if (error) setError(null);
+              }}
               placeholder="Nome da categoria"
-              className="bg-primary-bg border-primary-border text-text-primary"
+              className={`bg-primary-bg border-primary-border text-text-primary focus-visible:ring-0 transition-all ${
+                error
+                  ? "border-red-500 focus-visible:border-red-500"
+                  : "focus-visible:border-primary-active"
+              }`}
             />
+            {error && <p className="text-red-500 text-xs mt-1">{error}</p>}
           </div>
 
           <div className="space-y-2">
@@ -79,9 +110,9 @@ export function CategoryDialog({ children }: { children: React.ReactNode }) {
                   key={c}
                   type="button"
                   onClick={() => setColor(c)}
-                  className={`size-8 rounded-md transition-all ${c} bg-opacity-20 ${
+                  className={`size-8 rounded-md transition-all cursor-pointer ${c} bg-opacity-20 ${
                     color === c
-                      ? "ring-2 ring-white ring-offset-2 ring-offset-primary-bg"
+                      ? "ring-2 ring-white ring-offset ring-offset-primary-bg"
                       : "hover:opacity-80"
                   }`}
                 />
@@ -92,7 +123,7 @@ export function CategoryDialog({ children }: { children: React.ReactNode }) {
 
         <Button
           onClick={handleCreate}
-          className="w-full bg-blue-600 hover:bg-blue-700 text-white"
+          className="w-full bg-blue-600 hover:bg-blue-700 text-white cursor-pointer"
         >
           Criar Categoria
         </Button>

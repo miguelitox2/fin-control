@@ -40,6 +40,7 @@ function CategoriesPage() {
   const { workspace } = useWorkspace();
   const { categories, addCategory, deleteCategory } = useCategories();
   const [search, setSearch] = useState("");
+  const [suggestionError, setSuggestionError] = useState<string | null>(null);
 
   const filteredCategories = useMemo(() => {
     return categories.filter((c) => {
@@ -61,13 +62,36 @@ function CategoriesPage() {
     { name: "Outros", color: "bg-slate-500" },
   ];
 
+  const handleAddSuggested = (name: string, color: string) => {
+    const isDuplicate = categories.some(
+      (c) =>
+        c.workspaceId === workspace &&
+        c.name.toLowerCase() === name.toLowerCase(),
+    );
+
+    if (isDuplicate) {
+      setSuggestionError(`A categoria "${name}" já existe.`); // 2. Seta o erro
+      setTimeout(() => setSuggestionError(null), 3000); // 3. Limpa após 3 segundos
+      return;
+    }
+
+    addCategory({
+      id: crypto.randomUUID(),
+      name,
+      color,
+      type: "EXPENSE",
+      workspaceId: workspace,
+    });
+    setSuggestionError(null);
+  };
+
   return (
     <div className="space-y-8">
       <div className="flex justify-between items-center">
         <div className="relative flex-1 max-w-sm">
           <Search
-            className="absolute left-3 top-2.5 text-text-secondary"
-            size={18}
+            className="absolute left-3 top-3 text-text-secondary"
+            size={16}
           />
           <input
             type="text"
@@ -79,7 +103,7 @@ function CategoriesPage() {
         </div>
 
         <CategoryDialog>
-          <button className="flex items-center gap-2 bg-primary-active border border-primary-border px-4 py-2 rounded-lg text-sm font-medium hover:bg-primary-hover transition-all text-text-primary ml-4">
+          <button className="flex items-center cursor-pointer gap-2 bg-primary-bg border border-primary-border px-4 py-2 rounded-lg text-sm font-medium hover:bg-primary-hover transition-all text-text-primary ml-4">
             <Plus size={16} /> Nova
           </button>
         </CategoryDialog>
@@ -95,19 +119,19 @@ function CategoriesPage() {
           return (
             <div
               key={cat.id}
-              className="relative p-4 flex items-center gap-3 border border-primary-border bg-primary-bg rounded-xl hover:border-primary-active transition-all group"
+              className="relative p-3 flex items-center gap-3 border border-primary-border bg-primary-bg rounded-md hover:border-primary-active transition-all group"
             >
               <button
                 onClick={() => deleteCategory(cat.id)}
-                className="absolute top-1/2 -translate-y-1/2 right-3 p-1.5 text-text-secondary opacity-0 group-hover:opacity-100 hover:text-red-500 hover:bg-red-500/10 rounded-md transition-all"
+                className="absolute top-1/2 -translate-y-1/2 right-3 p-1.5 text-text-secondary opacity-0 group-hover:opacity-100 hover:text-red-500 hover:bg-red-500/10 rounded-md transition-all cursor-pointer"
               >
                 <Trash2 size={16} />
               </button>
 
               <div
-                className={`p-2 rounded-lg ${styles.softBg} flex items-center justify-center`}
+                className={`p-2 rounded-md ${styles.softBg} flex items-center justify-center`}
               >
-                <Tag size={20} className={styles.vibrantIcon} />
+                <Tag size={16} className={styles.vibrantIcon} />
               </div>
 
               <span className="font-medium text-text-primary">{cat.name}</span>
@@ -124,21 +148,18 @@ function CategoriesPage() {
           {suggestedCategories.map((sug) => (
             <button
               key={sug.name}
-              onClick={() =>
-                addCategory({
-                  id: crypto.randomUUID(),
-                  name: sug.name,
-                  color: sug.color,
-                  type: "EXPENSE",
-                  workspaceId: workspace,
-                })
-              }
-              className="px-3 py-1.5 border border-primary-border rounded-full text-xs text-text-secondary hover:border-primary-active hover:text-text-primary transition-all"
+              onClick={() => handleAddSuggested(sug.name, sug.color)}
+              className="px-3 py-1.5 border border-primary-border rounded-full text-xs text-text-secondary hover:border-primary-active hover:text-text-primary transition-all cursor-pointer"
             >
               + {sug.name}
             </button>
           ))}
         </div>
+        {suggestionError && (
+          <p className="text-red-500 text-xs mt-3 animate-in fade-in slide-in-from-top-1">
+            {suggestionError}
+          </p>
+        )}
       </div>
     </div>
   );
