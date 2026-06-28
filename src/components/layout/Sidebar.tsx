@@ -111,7 +111,7 @@ export function Sidebar() {
           <Button
             variant="ghost"
             className={cn(
-              "flex w-full items-center justify-start gap-3 px-3 py-2 text-text-danger-600 hover:bg-red-50/10 transition-all duration-300 cursor-pointer",
+              "flex w-full items-center justify-start gap-3 px-3 py-2 text-text-danger-600 hover:bg-text-danger-600/10 transition-all duration-300 cursor-pointer",
             )}
           >
             <div className="flex size-5 shrink-0 items-center justify-center">

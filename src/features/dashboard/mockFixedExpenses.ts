@@ -1,30 +1,19 @@
-// src/data/mock-fixed-expenses.ts
+// mockFixedExpenses.ts
 export const mockFixedExpenses = [
   {
-    id: "f1",
-    name: "Aluguel Apartamento",
-    amount: 1800.0,
+    id: "1",
+    name: "Aluguel",
+    amount: 2500,
     dayOfMonth: 5,
-    initials: "AL",
-    color: "bg-indigo-600",
+    categoryId: "cat-1",
     workspaceId: "personal",
   },
   {
-    id: "f2",
-    name: "Netflix",
-    amount: 49.9,
-    dayOfMonth: 5,
-    initials: "NE",
-    color: "bg-red-600",
-    workspaceId: "personal",
-  },
-  {
-    id: "f3",
-    name: "Servidor Cloud",
-    amount: 450.0,
+    id: "2",
+    name: "Internet",
+    amount: 150,
     dayOfMonth: 10,
-    initials: "SC",
-    color: "bg-blue-600",
-    workspaceId: "business",
+    categoryId: "cat-2",
+    workspaceId: "personal",
   },
 ];
