@@ -4,33 +4,7 @@ import { Tag, Plus, Search, Trash2 } from "lucide-react";
 import { useCategories } from "@/hooks/use-categories";
 import { useWorkspace } from "@/context/workspace-context";
 import { CategoryDialog } from "@/components/finance/categoryDialog";
-
-const styleMap: Record<string, { softBg: string; vibrantIcon: string }> = {
-  "bg-blue-500": { softBg: "bg-blue-500/20", vibrantIcon: "text-blue-500" },
-  "bg-red-500": { softBg: "bg-red-500/20", vibrantIcon: "text-red-500" },
-  "bg-emerald-500": {
-    softBg: "bg-emerald-500/20",
-    vibrantIcon: "text-emerald-500",
-  },
-  "bg-amber-500": { softBg: "bg-amber-500/20", vibrantIcon: "text-amber-500" },
-  "bg-violet-500": {
-    softBg: "bg-violet-500/20",
-    vibrantIcon: "text-violet-500",
-  },
-  "bg-pink-500": { softBg: "bg-pink-500/20", vibrantIcon: "text-pink-500" },
-  "bg-sky-500": { softBg: "bg-sky-500/20", vibrantIcon: "text-sky-500" },
-  "bg-orange-500": {
-    softBg: "bg-orange-500/20",
-    vibrantIcon: "text-orange-500",
-  },
-  "bg-indigo-500": {
-    softBg: "bg-indigo-500/20",
-    vibrantIcon: "text-indigo-500",
-  },
-  "bg-teal-500": { softBg: "bg-teal-500/20", vibrantIcon: "text-teal-500" },
-  "bg-red-600": { softBg: "bg-red-600/20", vibrantIcon: "text-red-600" },
-  "bg-slate-500": { softBg: "bg-slate-500/20", vibrantIcon: "text-slate-500" },
-};
+import { STYLE_MAP } from "@/styles/colors";
 
 export const Route = createFileRoute("/_app/categories")({
   component: CategoriesPage,
@@ -111,7 +85,7 @@ function CategoriesPage() {
 
       <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
         {filteredCategories.map((cat) => {
-          const styles = styleMap[cat.color] || {
+          const styles = STYLE_MAP[cat.color] || {
             softBg: "bg-gray-500/20",
             vibrantIcon: "text-gray-500",
           };

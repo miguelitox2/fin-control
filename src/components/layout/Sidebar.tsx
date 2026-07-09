@@ -12,7 +12,7 @@ import {
 import { Link } from "@tanstack/react-router";
 import { cn } from "@/lib/utils";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
-import { ModeToggle } from "../toogle/ModeToggle";
+import { ModeToggle } from "../toggle/ModeToggle";
 import { useState } from "react";
 import { Button } from "../ui/button";
 

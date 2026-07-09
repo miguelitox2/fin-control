@@ -1,7 +1,7 @@
 import { createFileRoute, Outlet, useLocation } from "@tanstack/react-router";
 import { WorkspaceProvider } from "@/context/workspace-context";
 import { Sidebar } from "@/components/layout/Sidebar";
-import { WorkspaceToggle } from "@/components/toogle/workspace-toggle";
+import { WorkspaceToggle } from "@/components/toggle/workspace-toggle";
 import { CategoriesProvider } from "@/context/categories-context";
 
 export const Route = createFileRoute("/_app")({
