@@ -4,7 +4,8 @@ import { Tag, Plus, Search, Trash2 } from "lucide-react";
 import { useCategories } from "@/hooks/use-categories";
 import { useWorkspace } from "@/context/workspace-context";
 import { CategoryDialog } from "@/components/finance/categoryDialog";
-import { STYLE_MAP } from "@/styles/colors";
+import { styleMap } from "@/styles/colors";
+import { suggestedCategories } from "@/components/finance/categories";
 
 export const Route = createFileRoute("/_app/categories")({
   component: CategoriesPage,
@@ -24,18 +25,6 @@ function CategoriesPage() {
     });
   }, [categories, workspace, search]);
 
-  const suggestedCategories = [
-    { name: "Carro", color: "bg-blue-500" },
-    { name: "Educação", color: "bg-violet-500" },
-    { name: "Compras", color: "bg-orange-500" },
-    { name: "Impostos", color: "bg-red-500" },
-    { name: "Investimentos", color: "bg-emerald-500" },
-    { name: "Empresa", color: "bg-teal-500" },
-    { name: "Funcionários", color: "bg-indigo-500" },
-    { name: "Marketing", color: "bg-amber-500" },
-    { name: "Outros", color: "bg-slate-500" },
-  ];
-
   const handleAddSuggested = (name: string, color: string) => {
     const isDuplicate = categories.some(
       (c) =>
@@ -44,8 +33,8 @@ function CategoriesPage() {
     );
 
     if (isDuplicate) {
-      setSuggestionError(`A categoria "${name}" já existe.`); // 2. Seta o erro
-      setTimeout(() => setSuggestionError(null), 3000); // 3. Limpa após 3 segundos
+      setSuggestionError(`A categoria "${name}" já existe.`);
+      setTimeout(() => setSuggestionError(null), 3000);
       return;
     }
 
@@ -85,7 +74,7 @@ function CategoriesPage() {
 
       <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
         {filteredCategories.map((cat) => {
-          const styles = STYLE_MAP[cat.color] || {
+          const styles = styleMap[cat.color] || {
             softBg: "bg-gray-500/20",
             vibrantIcon: "text-gray-500",
           };

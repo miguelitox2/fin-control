@@ -5,7 +5,6 @@ import "../App.css";
 export const Route = createRootRoute({
   component: () => (
     <>
-      {/*(Header/Sidebar)*/}
       <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
         <div className="antialiased">
           <Outlet />
