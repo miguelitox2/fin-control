@@ -6,8 +6,7 @@ import {
   Receipt,
   LogOut,
   Wallet,
-  ChevronLeft,
-  ChevronRight,
+  Pin,
 } from "lucide-react";
 import { Link } from "@tanstack/react-router";
 import { cn } from "@/lib/utils";
@@ -25,7 +24,11 @@ const navLinks = [
 ];
 
 export function Sidebar() {
-  const [isExpanded, setIsExpanded] = useState(true);
+  const [isPinned, setIsPinned] = useState(false);
+  const [isHovered, setIsHovered] = useState(false);
+
+  // A sidebar fica aberta se estiver fixada OU se o mouse estiver em cima dela
+  const isExpanded = isPinned || isHovered;
 
   return (
     <aside
@@ -33,17 +36,25 @@ export function Sidebar() {
         "border-r border-primary-border bg-primary-bg flex flex-col py-2 h-screen transition-all duration-300 ease-in-out relative",
         isExpanded ? "w-52" : "w-16",
       )}
-      onMouseEnter={() => setIsExpanded(true)}
-      onMouseLeave={() => setIsExpanded(false)}
+      onMouseEnter={() => setIsHovered(true)}
+      onMouseLeave={() => setIsHovered(false)}
     >
       <button
         onClick={(e) => {
           e.stopPropagation();
-          setIsExpanded(!isExpanded);
+          setIsPinned(!isPinned);
         }}
-        className="absolute -right-3 top-5 bg-primary-bg border border-primary-border rounded-full p-0.5 text-text-secondary hover:text-text-primary z-50"
+        className="absolute -right-3 top-5 bg-primary-bg border border-primary-border rounded-full p-1 text-text-secondary hover:text-text-primary z-50 transition-all cursor-pointer shadow-sm"
+        title={isPinned ? "Desafixar menu" : "Fixar menu"}
       >
-        {isExpanded ? <ChevronLeft size={16} /> : <ChevronRight size={16} />}
+        <Pin
+          size={14}
+          className={`transition-transform duration-200 ${
+            isPinned
+              ? "rotate-45 text-blue-500 fill-blue-500/20"
+              : "rotate-0 text-text-secondary"
+          }`}
+        />
       </button>
 
       <div className="h-10 flex items-center px-4 gap-2 mb-6">
