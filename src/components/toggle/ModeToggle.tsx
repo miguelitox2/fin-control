@@ -43,7 +43,7 @@ export function ModeToggle({ isExpanded }: ModeToggleProps) {
 
       <span
         className={cn(
-          "text-sm text-text-secondary whitespace-nowrap transition-all duration-300",
+          "text-sm text-text-secondary whitespace-nowrap transition-all duration-100",
           isExpanded ? "w-auto opacity-100" : "w-0 opacity-0 overflow-hidden",
         )}
       >

@@ -42,9 +42,9 @@ function AppLayout() {
   return (
     <WorkspaceProvider>
       <CategoriesProvider>
-        <div className="flex h-screen w-full">
+        <div className="flex h-screen w-full bg-page-bg">
           <Sidebar />
-          <div className="flex-1 flex flex-col h-full overflow-hidden py-4 px-6 ">
+          <div className="flex h-full flex-1 flex-col overflow-hidden px-6 py-4 pr-5">
             <div className="flex justify-between items-start mb-6 ">
               <header className="flex flex-col">
                 <h2 className="text-2xl font-bold text-text-primary">
@@ -55,7 +55,7 @@ function AppLayout() {
               <WorkspaceToggle />
             </div>
 
-            <main className="flex-1 overflow-y-auto">
+            <main className="flex-1 overflow-y-auto pr-4 pb-4 scrollbar-gutter-stable">
               <Outlet />
             </main>
           </div>

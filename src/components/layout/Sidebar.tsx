@@ -51,14 +51,14 @@ export function Sidebar() {
           size={14}
           className={`transition-transform duration-200 ${
             isPinned
-              ? "rotate-45 text-blue-500 fill-blue-500/20"
+              ? "rotate-45 text-emerald-500 fill-emerald-500/20"
               : "rotate-0 text-text-secondary"
           }`}
         />
       </button>
 
       <div className="h-10 flex items-center px-4 gap-2 mb-6">
-        <Wallet size={20} className="text-blue-500 shrink-0" />
+        <Wallet size={20} className="text-emerald-500 shrink-0" />
         <h1
           className={cn(
             "font-bold text-lg text-text-primary transition-opacity duration-300",
@@ -75,7 +75,8 @@ export function Sidebar() {
             key={link.to}
             to={link.to}
             activeProps={{
-              className: "bg-primary-active text-text-primary font-medium",
+              className:
+                "bg-[image:var(--primary-active)] text-white font-medium shadow-sm",
             }}
             className="flex items-center gap-3 px-3 py-2 text-sm rounded-lg text-text-secondary hover:bg-primary-hover transition-colors"
           >

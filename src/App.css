@@ -4,6 +4,7 @@
 @import "tailwindcss";
 
 @theme {
+  --color-page-bg: var(--page-bg);
   --color-primary-bg: var(--primary-bg);
   --color-primary-button-bg: var(--primary-button-bg);
   --color-primary-border: var(--primary-border);
@@ -17,25 +18,46 @@
 }
 
 :root {
-  --primary-bg: #fafafa;
-  --primary-button-bg: #e4e4e7;
-  --primary-border: #f4f4f5;
-  --text-primary: #18181b;
-  --text-secondary: #27272a;
-  --text-emerald-500: #16a34a;
-  --text-danger-600: #dc2626;
-  --primary-active: #e4e4e7;
-  --primary-hover: #e4e4e7;
-  --primary-hover-button: #d4d4d8;
+  --page-bg: #f3f6fb;
+  --primary-bg: #f8fafe;
+  --primary-button-bg: #026fd7;
+  --primary-border: #e2e8f0;
+  --text-primary: #0c111d;
+  --text-secondary: #5e636f;
+  --text-primary-active: #ffffff;
+  --text-emerald-500: #007d1e;
+  --text-danger-600: #d40924;
+  --primary-active: linear-gradient(135deg, #0aa85a 0%, #047a3f 100%);
+  --primary-active-hover: linear-gradient(135deg, #dcfce7 0%, #bbf7d0 100%);
+  --primary-hover: #e9eff9;
+  --primary-hover-button: #015cad;
 }
 
 .dark {
-  --primary-bg: #18181b;
-  --primary-button-bg: #27272a;
-  --primary-border: #27272a;
-  --text-primary: #f4f4f5;
-  --text-secondary: #e4e4e7;
-  --primary-active: #27272a;
-  --primary-hover: #27272a;
-  --primary-hover-button: #3f3f46;
+  --page-bg: #070b14;
+  --primary-bg: #0c1220;
+  --primary-button-bg: #2885ef;
+  --primary-border: #ffffff14;
+  --text-primary: #f4f5f9;
+  --text-secondary: #868fa2;
+  --text-primary-active: #ffffff;
+  --text-emerald-500: #189a30;
+  --text-danger-600: #d40924;
+  --primary-active: linear-gradient(135deg, #07964d -60%, #00bc7d 100%);
+  --primary-active-hover: linear-gradient(135deg, #d9fbe7 0%, #00bc7d 100%);
+  --primary-hover: #1b2233;
+  --primary-hover-button: #58a0f4;
+}
+
+@layer base {
+  html,
+  body,
+  #root {
+    min-height: 100%;
+  }
+
+  body {
+    background-color: var(--page-bg);
+    color: var(--text-primary);
+  }
 }
