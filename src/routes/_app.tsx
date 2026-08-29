@@ -3,6 +3,7 @@ import { WorkspaceProvider } from "@/context/workspace-context";
 import { Sidebar } from "@/components/layout/Sidebar";
 import { WorkspaceToggle } from "@/components/toggle/workspace-toggle";
 import { CategoriesProvider } from "@/context/categories-context";
+import { Plus } from "lucide-react";
 
 export const Route = createFileRoute("/_app")({
   component: AppLayout,
@@ -52,7 +53,17 @@ function AppLayout() {
                 </h2>
                 <p className="text-text-secondary text-sm">{config.subtitle}</p>
               </header>
-              <WorkspaceToggle />
+              <div className="flex items-center gap-3">
+                <WorkspaceToggle />
+                {pathname === "/transactions" && (
+                  <button
+                    onClick={() => window.dispatchEvent(new Event("open-entry-dialog"))}
+                    className="inline-flex items-center gap-2 rounded-lg bg-primary-button-bg px-4 py-2 text-sm font-medium text-white shadow-sm transition-colors hover:bg-primary-hover-button"
+                  >
+                    <Plus size={16} /> Novo lançamento
+                  </button>
+                )}
+              </div>
             </div>
 
             <main className="flex-1 overflow-y-auto pr-4 pb-4 scrollbar-gutter-stable">

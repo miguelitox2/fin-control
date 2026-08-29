@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import {
   Dialog,
   DialogContent,
@@ -36,10 +36,6 @@ export function CategoryDialog({ children }: { children: React.ReactNode }) {
   const { addCategory, categories } = useCategories();
   const { workspace } = useWorkspace();
 
-  useEffect(() => {
-    if (open) setError(null);
-  }, [open]);
-
   const handleCreate = () => {
     if (!name.trim()) {
       setError("O nome da categoria é obrigatório.");
@@ -70,7 +66,13 @@ export function CategoryDialog({ children }: { children: React.ReactNode }) {
   };
 
   return (
-    <Dialog open={open} onOpenChange={setOpen}>
+    <Dialog
+      open={open}
+      onOpenChange={(nextOpen) => {
+        if (nextOpen) setError(null);
+        setOpen(nextOpen);
+      }}
+    >
       <DialogTrigger asChild>{children}</DialogTrigger>
       <DialogContent className="bg-primary-bg border-primary-border sm:max-w-md">
         <DialogHeader>

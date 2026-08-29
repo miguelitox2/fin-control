@@ -10,7 +10,7 @@ import {
   XAxis,
   YAxis,
 } from "recharts";
-import { ArrowDown, ArrowUp, CalendarDays, Plus } from "lucide-react";
+import { ArrowDown, ArrowUp, CalendarDays } from "lucide-react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { useWorkspace } from "@/context/workspace-context";
 import { FixedExpensesList } from "@/components/finance/fixedExpensesList";
@@ -112,34 +112,37 @@ export function Dashboard() {
   }, [workspace]);
 
   const summaryCards = [
-    { title: "Saldo atual", value: balance, color: "text-text-primary" },
+    {
+      title: "Saldo atual",
+      value: balance,
+      color: balance >= 0 ? "text-text-primary" : "text-red-500",
+      gradient: balance >= 0
+        ? "from-blue-500/12 via-blue-500/5 to-white/0 dark:to-transparent"
+        : "from-red-500/12 via-red-500/5 to-white/0 dark:to-transparent",
+    },
     {
       title: "Receitas",
       value: income,
       color: "text-emerald-500",
       progress: (income / (income + expense || 1)) * 100,
+      gradient: "from-emerald-500/12 via-emerald-500/5 to-white/0 dark:to-transparent",
     },
     {
       title: "Despesas",
       value: expense,
       color: "text-red-500",
       progress: (expense / (income + expense || 1)) * 100,
+      gradient: "from-red-500/12 via-red-500/5 to-white/0 dark:to-transparent",
     },
   ];
 
   return (
     <div className="space-y-8 pb-6">
-      <div className="flex justify-end">
-        <button className="inline-flex items-center gap-2 rounded-lg bg-primary-button-bg px-4 py-2 text-sm font-medium text-white shadow-sm transition-colors hover:bg-primary-hover-button">
-          <Plus size={16} /> Novo lançamento
-        </button>
-      </div>
-
       <section className="grid grid-cols-1 gap-4 md:grid-cols-3">
         {summaryCards.map((card, index) => (
           <Card
             key={card.title}
-            className="border-primary-border bg-primary-bg shadow-none"
+            className={`border-primary-border bg-linear-to-br ${card.gradient} shadow-none`}
           >
             <CardHeader className="pb-2">
               <CardTitle className="text-xs font-medium uppercase tracking-wider text-text-secondary">

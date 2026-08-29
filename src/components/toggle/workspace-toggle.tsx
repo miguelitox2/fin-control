@@ -4,10 +4,10 @@ export function WorkspaceToggle() {
   const { workspace, setWorkspace } = useWorkspace();
 
   return (
-    <div className="bg-primary-bg border border-primary-border rounded-lg p-1 flex w-fit">
+    <div className="bg-primary-bg border border-primary-border rounded-lg p-1 flex w-fit gap-2">
       <button
         onClick={() => setWorkspace("personal")}
-        className={`px-4 py-1.5 text-sm font-medium rounded-md transition-all ${
+        className={` cursor-pointer px-4 py-1.5 text-sm font-medium rounded-md transition-all ${
           workspace === "personal"
             ? "bg-primary-button-bg text-white shadow-xs"
             : "text-text-secondary hover:text-text-primary"
@@ -17,7 +17,7 @@ export function WorkspaceToggle() {
       </button>
       <button
         onClick={() => setWorkspace("business")}
-        className={`px-4 py-1.5 text-sm font-medium rounded-md transition-all ${
+        className={`cursor-pointer px-4 py-1.5 text-sm font-medium rounded-md transition-all ${
           workspace === "business"
             ? "bg-primary-button-bg text-white shadow-xs"
             : "text-text-secondary hover:text-text-primary"

@@ -18,5 +18,9 @@ export default defineConfig([
     languageOptions: {
       globals: globals.browser,
     },
+    rules: {
+      // As rotas TanStack exportam o objeto Route e o componente no mesmo módulo.
+      "react-refresh/only-export-components": "off",
+    },
   },
 ])

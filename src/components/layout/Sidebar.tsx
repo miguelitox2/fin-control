@@ -27,7 +27,6 @@ export function Sidebar() {
   const [isPinned, setIsPinned] = useState(false);
   const [isHovered, setIsHovered] = useState(false);
 
-  // A sidebar fica aberta se estiver fixada OU se o mouse estiver em cima dela
   const isExpanded = isPinned || isHovered;
 
   return (
@@ -58,7 +57,7 @@ export function Sidebar() {
       </button>
 
       <div className="h-10 flex items-center px-4 gap-2 mb-6">
-        <Wallet size={20} className="text-emerald-500 shrink-0" />
+        <Wallet size={24} className="text-emerald-500 shrink-0" />
         <h1
           className={cn(
             "font-bold text-lg text-text-primary transition-opacity duration-300",
