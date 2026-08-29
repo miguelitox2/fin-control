@@ -18,26 +18,9 @@ import {
 import { Input } from "@/components/ui/input";
 import { useWorkspace } from "@/context/workspace-context";
 import { useCategories } from "@/hooks/use-categories";
+import { getTransactionTotals, useTransactions, type EntryKind, type EntryType, type TransactionEntry, type TransactionInput } from "@/features/transactions/transactions-context";
 
-type EntryKind = "FIXED" | "VARIABLE";
-type EntryType = "INCOME" | "EXPENSE";
-
-interface Entry {
-  id: string;
-  name: string;
-  amount: number;
-  date: string;
-  category: string;
-  categoryColor: string;
-  type: EntryType;
-  kind: EntryKind;
-  fixedUntil?: string;
-  workspaceId: "personal" | "business";
-}
-
-type FormData = Omit<Entry, "id" | "workspaceId">;
-
-const STORAGE_KEY = "fin-control.entries";
+type FormData = TransactionInput;
 const defaultForm: FormData = {
   name: "",
   amount: 0,
@@ -61,10 +44,7 @@ export const Route = createFileRoute("/_app/transactions")({
 function TransactionsPage() {
   const { workspace } = useWorkspace();
   const { categories } = useCategories();
-  const [entries, setEntries] = useState<Entry[]>(() => {
-    const saved = localStorage.getItem(STORAGE_KEY);
-    return saved ? (JSON.parse(saved) as Entry[]) : [];
-  });
+  const { entries, createEntry, updateEntry, deleteEntry } = useTransactions();
   const [search, setSearch] = useState("");
   const [filter, setFilter] = useState<"ALL" | EntryType>("ALL");
   const [startDate, setStartDate] = useState("");
@@ -80,10 +60,6 @@ function TransactionsPage() {
     setError("");
     setIsDialogOpen(true);
   }, []);
-
-  useEffect(() => {
-    localStorage.setItem(STORAGE_KEY, JSON.stringify(entries));
-  }, [entries]);
 
   useEffect(() => {
     window.addEventListener("open-entry-dialog", openDialog);
@@ -111,18 +87,7 @@ function TransactionsPage() {
       }),
     [workspaceEntries, search, filter, startDate, endDate],
   );
-  const totals = useMemo(
-    () =>
-      workspaceEntries.reduce(
-        (summary, entry) => ({
-          income: summary.income + (entry.type === "INCOME" ? entry.amount : 0),
-          expense:
-            summary.expense + (entry.type === "EXPENSE" ? entry.amount : 0),
-        }),
-        { income: 0, expense: 0 },
-      ),
-    [workspaceEntries],
-  );
+  const totals = useMemo(() => getTransactionTotals(workspaceEntries), [workspaceEntries]);
   const categoryOptions = useMemo(
     () =>
       categories
@@ -131,7 +96,7 @@ function TransactionsPage() {
     [categories, workspace],
   );
 
-  const openEditDialog = (entry: Entry) => {
+  const openEditDialog = (entry: TransactionEntry) => {
     setForm({
       name: entry.name,
       amount: entry.amount,
@@ -161,20 +126,13 @@ function TransactionsPage() {
       setError("Informe até quando esta cobrança fixa deve ocorrer.");
       return;
     }
-    const entry = {
+    const input = {
       ...form,
-      id: editingId ?? crypto.randomUUID(),
       name: form.name.trim(),
       fixedUntil: form.kind === "FIXED" ? form.fixedUntil : undefined,
-      workspaceId: workspace,
     };
-    setEntries((current) =>
-      editingId
-        ? current.map((currentEntry) =>
-            currentEntry.id === editingId ? entry : currentEntry,
-          )
-        : [...current, entry],
-    );
+    if (editingId) updateEntry(editingId, input, workspace);
+    else createEntry(input, workspace);
     setIsDialogOpen(false);
   };
 
@@ -264,7 +222,7 @@ function TransactionsPage() {
                   <button
                     key={option}
                     onClick={() => setFilter(option)}
-                    className={`rounded-md px-3 py-1.5 text-xs font-medium transition-colors ${filter === option ? "bg-primary-button-bg text-white" : "text-text-secondary hover:bg-primary-hover hover:text-text-primary"}`}
+                    className={`rounded-md px-3 py-1.5 text-xs font-medium transition-colors cursor-pointer ${filter === option ? "bg-(image:--primary-button-bg) text-white" : "text-text-secondary hover:bg-primary-hover hover:text-text-primary"}`}
                   >
                     {label}
                   </button>
@@ -311,7 +269,7 @@ function TransactionsPage() {
                     </td>
                     <td className="px-3 py-4">
                       <span
-                        className={`text-xs font-medium ${entry.kind === "FIXED" ? "text-blue-500" : "text-text-secondary"}`}
+                        className={`text-xs font-medium ${entry.kind === "FIXED" ? "text-blue-500" : "inline-flex items-center gap-1.5 rounded-full bg-primary-hover px-2.5 py-1 text-xs text-text-secondary"}`}
                       >
                         {entry.kind === "FIXED"
                           ? `Fixo até ${formatDate(entry.fixedUntil!)}`
@@ -335,11 +293,7 @@ function TransactionsPage() {
                         </button>
                         <button
                           onClick={() =>
-                            setEntries((current) =>
-                              current.filter(
-                                (currentEntry) => currentEntry.id !== entry.id,
-                              ),
-                            )
+                            deleteEntry(entry.id)
                           }
                           className="rounded p-1.5 text-text-secondary transition-colors hover:bg-red-500/10 hover:text-red-500"
                           aria-label={`Excluir ${entry.name}`}
@@ -478,7 +432,7 @@ function TransactionsPage() {
             {error && <p className="text-sm text-red-500">{error}</p>}
             <button
               onClick={saveEntry}
-              className="rounded-lg bg-primary-button-bg px-4 py-2.5 text-sm font-semibold text-white transition-colors hover:bg-primary-hover-button"
+              className="rounded-lg cursor-pointer bg-(image:--primary-button-bg) px-4 py-2.5 text-sm font-semibold text-white hover:opacity-90 transition-all duration-200"
             >
               {editingId ? "Salvar alterações" : "Salvar lançamento"}
             </button>

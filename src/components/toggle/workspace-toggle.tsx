@@ -9,7 +9,7 @@ export function WorkspaceToggle() {
         onClick={() => setWorkspace("personal")}
         className={` cursor-pointer px-4 py-1.5 text-sm font-medium rounded-md transition-all ${
           workspace === "personal"
-            ? "bg-primary-button-bg text-white shadow-xs"
+            ? "bg-(image:--primary-button-bg) text-white shadow-xs"
             : "text-text-secondary hover:text-text-primary"
         }`}
       >
@@ -19,7 +19,7 @@ export function WorkspaceToggle() {
         onClick={() => setWorkspace("business")}
         className={`cursor-pointer px-4 py-1.5 text-sm font-medium rounded-md transition-all ${
           workspace === "business"
-            ? "bg-primary-button-bg text-white shadow-xs"
+            ? "bg-(image:--primary-button-bg) text-white shadow-xs"
             : "text-text-secondary hover:text-text-primary"
         }`}
       >

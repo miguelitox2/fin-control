@@ -20,7 +20,7 @@
 :root {
   --page-bg: #f3f6fb;
   --primary-bg: #f8fafe;
-  --primary-button-bg: #026fd7;
+  --primary-button-bg: linear-gradient(135deg, #0f693a -75%, #00bc7d 100%);
   --primary-border: #e2e8f0;
   --text-primary: #0c111d;
   --text-secondary: #5e636f;
@@ -36,7 +36,7 @@
 .dark {
   --page-bg: #070b14;
   --primary-bg: #0c1220;
-  --primary-button-bg: #2885ef;
+  --primary-button-bg: linear-gradient(135deg, #0f693a -75%, #00bc7d 100%);
   --primary-border: #ffffff14;
   --text-primary: #f4f5f9;
   --text-secondary: #868fa2;

@@ -3,6 +3,7 @@ import { WorkspaceProvider } from "@/context/workspace-context";
 import { Sidebar } from "@/components/layout/Sidebar";
 import { WorkspaceToggle } from "@/components/toggle/workspace-toggle";
 import { CategoriesProvider } from "@/context/categories-context";
+import { TransactionsProvider } from "@/features/transactions/transactions-context";
 import { Plus } from "lucide-react";
 
 export const Route = createFileRoute("/_app")({
@@ -43,9 +44,10 @@ function AppLayout() {
   return (
     <WorkspaceProvider>
       <CategoriesProvider>
+        <TransactionsProvider>
         <div className="flex h-screen w-full bg-page-bg">
           <Sidebar />
-          <div className="flex h-full flex-1 flex-col overflow-hidden px-6 py-4 pr-5">
+          <div className="flex h-full flex-1 flex-col overflow-hidden px-6 py-4">
             <div className="flex justify-between items-start mb-6 ">
               <header className="flex flex-col">
                 <h2 className="text-2xl font-bold text-text-primary">
@@ -57,8 +59,10 @@ function AppLayout() {
                 <WorkspaceToggle />
                 {pathname === "/transactions" && (
                   <button
-                    onClick={() => window.dispatchEvent(new Event("open-entry-dialog"))}
-                    className="inline-flex items-center gap-2 rounded-lg bg-primary-button-bg px-4 py-2 text-sm font-medium text-white shadow-sm transition-colors hover:bg-primary-hover-button"
+                    onClick={() =>
+                      window.dispatchEvent(new Event("open-entry-dialog"))
+                    }
+                    className="inline-flex items-center gap-2 rounded-lg bg-(image:--primary-button-bg) px-4 py-2 text-sm font-medium text-white shadow-sm transition-colors hover:bg-primary-hover-button"
                   >
                     <Plus size={16} /> Novo lançamento
                   </button>
@@ -66,11 +70,12 @@ function AppLayout() {
               </div>
             </div>
 
-            <main className="flex-1 overflow-y-auto pr-4 pb-4 scrollbar-gutter-stable">
+            <main className="flex-1 overflow-y-auto scrollbar-gutter-stable">
               <Outlet />
             </main>
           </div>
         </div>
+        </TransactionsProvider>
       </CategoriesProvider>
     </WorkspaceProvider>
   );

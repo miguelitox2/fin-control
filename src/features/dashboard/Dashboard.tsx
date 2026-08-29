@@ -14,8 +14,8 @@ import { ArrowDown, ArrowUp, CalendarDays } from "lucide-react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { useWorkspace } from "@/context/workspace-context";
 import { FixedExpensesList } from "@/components/finance/fixedExpensesList";
-import { mockTransactions } from "./moc-data";
 import { mockFixedExpenses } from "./mockFixedExpenses";
+import { getTransactionTotals, useTransactions } from "@/features/transactions/transactions-context";
 
 const monthlyData = {
   personal: [
@@ -58,74 +58,43 @@ const formatCurrency = (value: number) =>
 
 export function Dashboard() {
   const { workspace } = useWorkspace();
+  const { entries } = useTransactions();
   const chartData = monthlyData[workspace];
   const categories = categoryData[workspace];
 
   const { income, expense, balance, trend, fixedExpenses } = useMemo(() => {
-    const transactions = mockTransactions.filter(
-      (transaction) => transaction.workspaceId === workspace,
-    );
-    const latestMonth = transactions.reduce(
-      (latest, transaction) =>
-        transaction.date > latest ? transaction.date : latest,
-      transactions[0]?.date ?? new Date(),
-    );
-    const isInMonth = (date: Date, month: number) =>
-      date.getUTCMonth() === month;
-    const currentTransactions = transactions.filter((transaction) =>
-      isInMonth(transaction.date, latestMonth.getUTCMonth()),
-    );
-    const previousTransactions = transactions.filter((transaction) =>
-      isInMonth(transaction.date, latestMonth.getUTCMonth() - 1),
-    );
+    const transactions = entries.filter((entry) => entry.workspaceId === workspace);
     const fixedExpenses = mockFixedExpenses.filter(
       (fixedExpense) => fixedExpense.workspaceId === workspace,
     );
-    const sumByType = (
-      items: typeof transactions,
-      type: "INCOME" | "EXPENSE",
-    ) =>
-      items
-        .filter((transaction) => transaction.type === type)
-        .reduce((total, transaction) => total + transaction.value, 0);
-    const fixedTotal = fixedExpenses.reduce(
-      (total, fixedExpense) => total + fixedExpense.amount,
-      0,
-    );
-    const income = sumByType(currentTransactions, "INCOME");
-    const expense = sumByType(currentTransactions, "EXPENSE") + fixedTotal;
+    const { income, expense } = getTransactionTotals(transactions);
     const balance = income - expense;
-    const previousBalance =
-      sumByType(previousTransactions, "INCOME") -
-      sumByType(previousTransactions, "EXPENSE") -
-      fixedTotal;
     return {
       income,
       expense,
       balance,
-      trend:
-        previousBalance === 0
-          ? 0
-          : ((balance - previousBalance) / Math.abs(previousBalance)) * 100,
+      trend: 0,
       fixedExpenses,
     };
-  }, [workspace]);
+  }, [entries, workspace]);
 
   const summaryCards = [
     {
       title: "Saldo atual",
       value: balance,
       color: balance >= 0 ? "text-text-primary" : "text-red-500",
-      gradient: balance >= 0
-        ? "from-blue-500/12 via-blue-500/5 to-white/0 dark:to-transparent"
-        : "from-red-500/12 via-red-500/5 to-white/0 dark:to-transparent",
+      gradient:
+        balance >= 0
+          ? "from-blue-500/12 via-blue-500/5 to-white/0 dark:to-transparent"
+          : "from-red-500/12 via-red-500/5 to-white/0 dark:to-transparent",
     },
     {
       title: "Receitas",
       value: income,
       color: "text-emerald-500",
       progress: (income / (income + expense || 1)) * 100,
-      gradient: "from-emerald-500/12 via-emerald-500/5 to-white/0 dark:to-transparent",
+      gradient:
+        "from-emerald-500/12 via-emerald-500/5 to-white/0 dark:to-transparent",
     },
     {
       title: "Despesas",
